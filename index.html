@@ -4,23 +4,51 @@
   </head>
   <body>
     <h1 id="h1">
-      It works!
+      It's going to work...
     </h1>
+    
     <video id="video" style="width: 100%"></video>
+    
     <script>
         var video = document.getElementById('video');
       
         if(Hls.isSupported()) {
             var hls = new Hls();
           
-            hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
+            hls.on(Hls.Events.ERROR, function(event, data) {
+                if (data.fatal) {
+                    switch(data.type) {
+                        case Hls.ErrorTypes.NETWORK_ERROR:
+                            console.log("hls.js: network error, try to recover");
+                            hls.startLoad();
+                            break;
+                        
+                        case Hls.ErrorTypes.MEDIA_ERROR:
+                            console.log("hls.js: media error, try to recover");
+                            hls.recoverMediaError();
+                            break;
+                    
+                        default:
+                            console.log("hls.js: fatal error, can not recover");
+                            hls.destroy();
+                            break;
+                    }
+                }
+            });          
+          
             hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                console.log("hls.js: source loaded");
                 hls.attachMedia(video);
-                hls.on(Hls.Events.MEDIA_ATTACHED, function() {
-                    video.play();
-                    document.getElementById('h1').innerHTML = 'hls.js video streaming';
-                });
             });
+          
+            hls.on(Hls.Events.MEDIA_ATTACHED, function() {
+                console.log("hls.js: media attached");
+                video.play();
+                document.getElementById('h1').innerHTML = 'hls.js video streaming...';
+            });
+          
+          
+            hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
         }
         // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
         // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
@@ -31,7 +59,7 @@
             video.src = 'https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8';
             video.addEventListener('loadedmetadata', function() {
                 video.play();
-                document.getElementById('h1').innerHTML = 'Built-in video support';
+                document.getElementById('h1').innerHTML = 'Built-in video streaming...';
             });
         }
     </script>
