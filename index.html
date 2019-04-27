@@ -1,15 +1,25 @@
 <html>
-    <head>
-        <script src="//cdn.jsdelivr.net/npm/hls.js@latest"></script>
-        <script>
-            if (Hls.isSupported()) {
-                console.log("hello hls.js!");
-            }
-        </script>
-    </head>
-    <body>
-        <h1>
-            It works!
-        </h1>
-    </body>
+  <head>
+    <script src="//cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+      
+      var video = document.getElementById('video');
+      
+      if (Hls.isSupported()) {
+          var hls = new Hls();
+
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+              console.log("video and hls.js are now bound together !");
+          });
+      }
+      
+    </script>
+  </head>
+  <body>
+    <h1>
+      It works!
+    </h1>
+    <video id="video"></video>
+  </body>
 </html>
