@@ -15,7 +15,7 @@
             hls.attachMedia(video);
             hls.on(Hls.Events.MANIFEST_PARSED,function() {
                 video.play();
-                document.getElementById('h1').innerHTML = 'hls.js video streaming';
+                //document.getElementById('h1').innerHTML = 'hls.js video streaming';
             });
         }
         // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
