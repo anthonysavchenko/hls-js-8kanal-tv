@@ -11,13 +11,21 @@
         var video = document.getElementById('video');
         if(Hls.isSupported()) {
             var hls = new Hls();
-            hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+              hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
+              hls.on(Hls.Events.MANIFEST_PARSED,function() {
+                document.getElementById('h1').innerHTML = 'hls.js video streaming';
+                video.play();
+              });
+            });
+            /*hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
             hls.attachMedia(video);
             hls.on(Hls.Events.MANIFEST_PARSED,function() {
                 video.play();
                 document.getElementById('h1').innerHTML = 'hls.js video streaming';
                 video.play();
-            });
+            });*/
         }
         // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
         // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
