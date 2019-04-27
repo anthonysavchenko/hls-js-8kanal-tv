@@ -43,7 +43,15 @@
           
             hls.on(Hls.Events.MEDIA_ATTACHED, function() {
                 console.log("hls.js: media attached");
-                video.play();
+                
+                try {
+                    video.play();
+                }
+                catch (e) {
+                    console.log(e);
+                    hls.recoverMediaError();
+                }
+              
                 document.getElementById('h1').innerHTML = 'hls.js video streaming...';
             });
           
