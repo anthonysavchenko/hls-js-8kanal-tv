@@ -16,7 +16,7 @@
             hls.loadSource('https://video-dev.github.io/streams/x36xhzz/x36xhzz.m3u8');
             hls.on(Hls.Events.MANIFEST_PARSED, function() {
                 hls.attachMedia(video);
-                hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+                hls.on(Hls.Events.MEDIA_ATTACHED, function() {
                     video.play();
                     document.getElementById('h1').innerHTML = 'hls.js video streaming';
                 });
