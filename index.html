@@ -12,7 +12,7 @@
           hls.attachMedia(video);
           hls.on(Hls.Events.MEDIA_ATTACHED, function () {
               console.log("video and hls.js are now bound together !");
-              hls.loadSource("http://my.streamURL.com/playlist.m3u8");
+              hls.loadSource("http://212.107.192.252/cam1/life.m3u8");
               hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
                 console.log("manifest loaded, found " + data.levels.length + " quality level");
                 video.play();
